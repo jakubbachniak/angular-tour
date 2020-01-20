@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Hero } from './hero';
-import { HEROES } from '../mock-heroes';
+import { HeroService } from '../hero.service';
 
 
 @Component({
@@ -12,18 +12,24 @@ import { HEROES } from '../mock-heroes';
 export class HeroesComponent implements OnInit {
 
   valueofInput: string;
-  heroes = HEROES;
   selectedHero: Hero;
+  heroes: Hero[];
 
-
-  constructor() { }
+  constructor(private heroesService: HeroService) { }
 
   ngOnInit() {
+
+      this.getHeroes();
   }
 
   // handle li element click event
   onSelect(hero: Hero) {
     this.selectedHero = hero;
+  }
+
+  // retrieve heroes from the service
+  getHeroes(): void {
+    this.heroesService.retrieveHeroes().subscribe(heroes => this.heroes = heroes);
   }
 
   // handle click event of the button in the heroes page.
