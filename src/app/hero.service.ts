@@ -12,10 +12,15 @@ export class HeroService {
 
   constructor(private messageService: MessageService) { }
 
-  // add method to return the mock heroes
+  retrieveHero(id: number): Observable<Hero> {
+    // TODO: send the message _after_ fetching the hero
+    this.messageService.add(`HeroService: fetched hero id=${id}`);
+    return of(HEROES.find(hero => hero.id === id));
+  }
+  
   retrieveHeroes(): Observable<Hero[]> {
-    // TODO: send message after fetching new data from HEROES
-    this.messageService.add('Hero service: fetched heroes.');
+    // TODO: send the message _after_ fetching the heroes
+    this.messageService.add('HeroService: fetched heroes');
     return of(HEROES);
   }
 }
